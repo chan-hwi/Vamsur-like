@@ -7,8 +7,8 @@ public class PlayerMove : MonoBehaviour
 {
 
     public float speed = 3.0f;
+    public Vector2 inputVec;
 
-    private Vector2 inputVec;
     private Rigidbody2D rigid;
     private SpriteRenderer spRenderer;
     private Animator anim;
