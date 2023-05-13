@@ -2,17 +2,23 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class EnemyMove : MonoBehaviour
+public class Enemy : MonoBehaviour
 {
     public float speed = 2.0f;
+    public float health;
+    public float maxHealth;
+    public bool isAlive = true;
+    public RuntimeAnimatorController[] animCons;
 
     private Vector2 moveDir;
     private Rigidbody2D rigid;
     private SpriteRenderer spriter;
+    private Animator anim;
     private void Awake()
     {
         rigid = GetComponent<Rigidbody2D>();
         spriter = GetComponent<SpriteRenderer>();
+        anim = GetComponent<Animator>();
     }
 
     private void FixedUpdate()
@@ -25,5 +31,19 @@ public class EnemyMove : MonoBehaviour
     private void LateUpdate()
     {
         spriter.flipX = moveDir.x < 0;
+    }
+
+    private void OnEnable()
+    {
+        health = maxHealth;
+        isAlive = true;
+    }
+
+    public void Init(SpawnData data)
+    {
+        anim.runtimeAnimatorController = animCons[data.spriteType];
+        maxHealth = data.health;
+        health = data.health;
+        speed = data.speed;
     }
 }
