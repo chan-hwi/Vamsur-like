@@ -18,7 +18,7 @@ public class PoolManager : MonoBehaviour
 
     public GameObject Get(int index)
     {
-        if (index >= pools.Length) return null;
+        if (index >= prefabs.Length) return null;
 
         foreach (GameObject prefab in pools[index])
         {
