@@ -4455,7 +4455,7 @@ Camera:
   far clip plane: 1000
   field of view: 34
   orthographic: 1
-  orthographic size: 0
+  orthographic size: 6.6666665
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
@@ -9106,7 +9106,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 5
   m_Sprite: {fileID: -1772916002, guid: 99a24620d31e5ce4e823c32d11e17c2c, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -9201,9 +9201,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3b073f5bf5459304fbb01b6da096cf69, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  nearestEnemyTransform: {fileID: 0}
   EnemyLayermask:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 64
+  range: 7
 --- !u!1 &937740849
 GameObject:
   m_ObjectHideFlags: 0
@@ -9236,6 +9238,7 @@ MonoBehaviour:
   prefabs:
   - {fileID: 8479121779211121445, guid: 15793c3eda13dd244bb858f6f591c3cb, type: 3}
   - {fileID: 2000572446108735761, guid: e54db58b46b758d4eb6ba5fa65173ef7, type: 3}
+  - {fileID: 7976319731725276915, guid: c90c406ead601d148a8ece5d92672f86, type: 3}
 --- !u!4 &937740851
 Transform:
   m_ObjectHideFlags: 0
@@ -9532,11 +9535,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9cc13405ebb33c14c920c3393baa7366, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  id: 0
-  prefabId: 1
-  damage: 10
-  count: 2
-  speed: 150
+  id: 1
+  prefabId: 2
+  damage: 5
+  count: 1
+  speed: 0.3
 --- !u!1 &1489382168
 GameObject:
   m_ObjectHideFlags: 0
