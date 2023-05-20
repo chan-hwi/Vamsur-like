@@ -7,6 +7,8 @@ public class Player : MonoBehaviour
 {
 
     public float speed = 3.0f;
+    public float health;
+    public float maxHealth = 100f;
     public Vector2 inputVec;
 
     private Rigidbody2D rigid;
@@ -20,6 +22,11 @@ public class Player : MonoBehaviour
         spRenderer = GetComponent<SpriteRenderer>();
         anim = GetComponent<Animator>();
         scanner = GetComponent<Scanner>();
+    }
+
+    private void Start()
+    {
+        health = maxHealth;
     }
 
     private void OnMove(InputValue value)
