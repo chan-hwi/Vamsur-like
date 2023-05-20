@@ -12,12 +12,14 @@ public class Player : MonoBehaviour
     private Rigidbody2D rigid;
     private SpriteRenderer spRenderer;
     private Animator anim;
+    private Scanner scanner;
     // Start is called before the first frame update
     private void Awake()
     {
         rigid = GetComponent<Rigidbody2D>();
         spRenderer = GetComponent<SpriteRenderer>();
         anim = GetComponent<Animator>();
+        scanner = GetComponent<Scanner>();
     }
 
     private void OnMove(InputValue value)

@@ -10,6 +10,8 @@ public class Weapon : MonoBehaviour
     public int count;
     public float speed;
 
+    private float timer = 0f;
+
     private void Start()
     {
         Init();
@@ -22,11 +24,19 @@ public class Weapon : MonoBehaviour
             case 0:
                 transform.Rotate(-Vector3.forward * speed * Time.deltaTime);
                 break;
+            case 1:
+                timer += Time.deltaTime;
+                if (timer >= speed)
+                {
+                    timer = 0f;
+                    Fire();
+                }
+                break;
             default:
                 break;
         }
 
-        if (Input.GetButtonDown("Jump")) LevelUp(10, 2);
+        if (Input.GetButtonDown("Jump")) LevelUp(5, 1);
     }
 
     public void Init()
@@ -64,8 +74,23 @@ public class Weapon : MonoBehaviour
             bulletTransform.localRotation = Quaternion.identity;
 
             bulletTransform.Rotate(Vector3.forward * 360 * i / count);
-            bulletTransform.Translate(bulletTransform.up * 1.5f, Space.World);
-            bulletTransform.gameObject.GetComponent<Bullet>().Init(this.damage, -1); // -1 for Infinite Penetration
+            bulletTransform.Translate(bulletTransform.up * 1.5f, Space.World); // bulletTransform.Translate(new Vector3(0,1) * 1.5f, Space.Self);
+            bulletTransform.gameObject.GetComponent<Bullet>().Init(this.damage, -1, Vector3.zero); // -1 for Infinite Penetration
         }
+    }
+
+    void Fire()
+    {
+        Transform target = GetComponentInParent<Scanner>().nearestEnemyTransform;
+        if (!target) return;
+
+        Transform bulletTransform = GameManager.instance.poolManager.GetComponent<PoolManager>().Get(prefabId).transform;
+
+        Vector3 dir = target.position - transform.position;
+
+        bulletTransform.position = transform.position;
+
+        bulletTransform.rotation = Quaternion.FromToRotation(Vector3.up, dir);
+        bulletTransform.gameObject.GetComponent<Bullet>().Init(this.damage, this.count, dir.normalized * 15f);
     }
 }
