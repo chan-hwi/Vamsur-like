@@ -69,6 +69,12 @@ public class Weapon : MonoBehaviour
                 speed = 0.4f;
                 break;
         }
+
+        // Hand Set
+        Hand hand = transform.parent.GetComponent<Player>().hands[(int)data.type];
+        hand.gameObject.SetActive(true);
+        hand.spriter.sprite = data.hand;
+
         transform.parent.BroadcastMessage("ApplyGear", SendMessageOptions.DontRequireReceiver);
     }
 
