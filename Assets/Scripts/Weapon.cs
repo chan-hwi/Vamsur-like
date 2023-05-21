@@ -5,17 +5,12 @@ using UnityEngine;
 public class Weapon : MonoBehaviour
 {
     public int id;
-    public int prefabId;
+    public int prefabId = -1;
     public float damage;
     public int count;
     public float speed;
 
     private float timer = 0f;
-
-    private void Start()
-    {
-        Init();
-    }
 
     private void Update()
     {
@@ -39,26 +34,53 @@ public class Weapon : MonoBehaviour
         if (Input.GetButtonDown("Jump")) LevelUp(5, 1);
     }
 
-    public void Init()
+    public void Init(ItemData data)
     {
-        switch(id)
+        // Basic Set
+        id = data.itemId;
+        name = "Weapon " + data.itemId;
+        transform.parent = GameManager.instance.player.transform;
+        transform.localPosition = Vector3.zero;
+
+        damage = data.baseDamage;
+        count = data.baseCount;
+
+        PoolManager poolManager = GameManager.instance.poolManager.GetComponent<PoolManager>();
+        for (int index = 0; index < poolManager.prefabs.Length; index++)
+        {
+            if (poolManager.prefabs[index] == data.projectile)
+            {
+                prefabId = index;
+                break;
+            }
+        }
+
+        if (prefabId == -1) throw new System.Exception("Invalid PrefabId");
+
+
+        // Property Set
+        switch (id)
         {
             case 0:
                 speed = 150f;
                 locateWeapon0();
                 break;
             default:
+                speed = 0.4f;
                 break;
         }
+        transform.parent.BroadcastMessage("ApplyGear", SendMessageOptions.DontRequireReceiver);
     }
 
-    void LevelUp(float damageDiff, int countDiff)
+    public void LevelUp(float newDamage, int countDiff)
     {
-        this.damage += damageDiff;
+        this.damage = newDamage;
         this.count += countDiff;
 
         if (id == 0)
             locateWeapon0();
+
+        transform.parent.BroadcastMessage("ApplyGear", SendMessageOptions.DontRequireReceiver);
     }
 
     void locateWeapon0()
