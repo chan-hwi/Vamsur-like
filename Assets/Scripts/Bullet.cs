@@ -28,6 +28,8 @@ public class Bullet : MonoBehaviour
 
     private void FixedUpdate()
     {
+        if (!GameManager.instance.isAlive) return;
+
         if (Vector3.Distance(transform.position, GameManager.instance.player.transform.position) > 30f)
         {
             gameObject.SetActive(false);

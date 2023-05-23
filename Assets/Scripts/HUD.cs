@@ -17,7 +17,7 @@ public class HUD : MonoBehaviour
         switch (Type)
         {
             case InfoType.Exp:
-                slider.value = Mathf.Clamp01((float)gm.exp / gm.nextExp[gm.level]);
+                slider.value = Mathf.Clamp((float)gm.exp / gm.nextExp[gm.level], 0f, 1f);
                 break;
             case InfoType.Level:
                 text.text = string.Format("LV. {0:F0}", gm.level);

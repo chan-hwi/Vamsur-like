@@ -25,6 +25,8 @@ public class Enemy : MonoBehaviour
 
     private void FixedUpdate()
     {
+        if (!GameManager.instance.isAlive) return;
+
         if (!isAlive || anim.GetCurrentAnimatorStateInfo(0).IsName("Hit")) return;
 
         moveDir = (GameManager.instance.player.GetComponent<Rigidbody2D>().position - rigid.position).normalized;
@@ -34,6 +36,8 @@ public class Enemy : MonoBehaviour
 
     private void LateUpdate()
     {
+        if (!GameManager.instance.isAlive) return;
+
         if (!isAlive) return;
 
         spriter.flipX = moveDir.x < 0;
@@ -80,7 +84,7 @@ public class Enemy : MonoBehaviour
             anim.SetBool("Dead", true);
 
             GameManager.instance.kill++;
-            GameManager.instance.GetComponent<GameManager>().getExp();
+            GameManager.instance.getExp();
         }
     }
 

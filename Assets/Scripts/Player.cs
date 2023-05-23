@@ -39,11 +39,15 @@ public class Player : MonoBehaviour
     // Update is called once per frame
     private void FixedUpdate()
     {
+        if (!GameManager.instance.isAlive) return;
+
         rigid.MovePosition(rigid.position + inputVec * speed * Time.fixedDeltaTime);
     }
 
     private void LateUpdate()
     {
+        if (!GameManager.instance.isAlive) return;
+
         if (inputVec.x != 0)
         {
             spRenderer.flipX = inputVec.x < 0;

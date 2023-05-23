@@ -29,15 +29,15 @@ public class Reposition : MonoBehaviour
             case "Ground":
                 if (diffX < diffY)
                 {
-                    transform.Translate(Vector3.up * (dirY > 0 ? 1 : -1) * 40);
+                    transform.Translate(Vector3.up * (dirY > 0 ? 1 : -1) * 60);
                 }
                 else if (diffX > diffY)
                 {
-                    transform.Translate(Vector3.right * (dirX > 0 ? 1 : -1) * 40);
+                    transform.Translate(Vector3.right * (dirX > 0 ? 1 : -1) * 60);
                 }
                 break;
             case "Enemy":
-                transform.Translate((playerPos - pos).normalized * 20 + new Vector3(Random.Range(-3.0f, 3.0f), Random.Range(-3.0f, 3.0f), 0f));
+                transform.Translate((playerPos - pos).normalized * 30 + new Vector3(Random.Range(-3.0f, 3.0f), Random.Range(-3.0f, 3.0f), 0f));
                 break;
         }
     }

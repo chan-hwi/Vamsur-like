@@ -13,18 +13,43 @@ public class Item : MonoBehaviour
 
     Image itemIcon;
     Text levelText;
+    Text nameText;
+    Text descText;
 
     private void Awake()
     {
         itemIcon = GetComponentsInChildren<Image>()[1];
-        levelText = GetComponentsInChildren<Text>()[0];
+
+        Text[] texts = GetComponentsInChildren<Text>();
+        levelText = texts[0];
+        nameText = texts[1];
+        descText = texts[2];
+
+        nameText.text = data.itemName;
     }
 
-    private void LateUpdate()
+    private void OnEnable()
     {
         itemIcon.sprite = data.itemIcon;
         if (!noLevel) levelText.text = "LV." + (level + 1);
         else levelText.text = "-";
+
+        switch (data.type)
+        {
+            case ItemData.ItemType.Melee:
+            case ItemData.ItemType.Range:
+                descText.text = string.Format(data.itemDesc, data.damages[level] * 100, data.counts[level]);
+                break;
+
+            case ItemData.ItemType.Glove:
+            case ItemData.ItemType.Shoe:
+                descText.text = string.Format(data.itemDesc, data.damages[level] * 100);
+                break;
+
+            default:
+                descText.text = string.Format(data.itemDesc);
+                break;
+        }
     }
 
     public void OnClick()
@@ -61,7 +86,7 @@ public class Item : MonoBehaviour
                 }
                 break;
             case ItemData.ItemType.Heal:
-                Player player = GameManager.instance.player.GetComponent<Player>();
+                Player player = GameManager.instance.player;
                 player.health = player.maxHealth;
                 break;
         }

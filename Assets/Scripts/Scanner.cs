@@ -11,6 +11,8 @@ public class Scanner : MonoBehaviour
 
     private void FixedUpdate()
     {
+        if (!GameManager.instance.isAlive) return;
+
         targets = Physics2D.CircleCastAll(transform.position, range, Vector2.zero, 0f, EnemyLayermask);
         GetNearestEnemy();
     }

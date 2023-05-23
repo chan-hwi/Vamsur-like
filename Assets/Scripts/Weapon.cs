@@ -14,6 +14,8 @@ public class Weapon : MonoBehaviour
 
     private void Update()
     {
+        if (!GameManager.instance.isAlive) return;
+
         switch (id)
         {
             case 0:
@@ -45,7 +47,7 @@ public class Weapon : MonoBehaviour
         damage = data.baseDamage;
         count = data.baseCount;
 
-        PoolManager poolManager = GameManager.instance.poolManager.GetComponent<PoolManager>();
+        PoolManager poolManager = GameManager.instance.poolManager;
         for (int index = 0; index < poolManager.prefabs.Length; index++)
         {
             if (poolManager.prefabs[index] == data.projectile)
@@ -95,7 +97,7 @@ public class Weapon : MonoBehaviour
         {
             Transform bulletTransform = null;
             if (i < transform.childCount) bulletTransform = transform.GetChild(i);
-            else bulletTransform = GameManager.instance.poolManager.GetComponent<PoolManager>().Get(prefabId).transform;
+            else bulletTransform = GameManager.instance.poolManager.Get(prefabId).transform;
 
             bulletTransform.parent = transform;
             bulletTransform.localPosition = Vector3.zero;
@@ -112,7 +114,7 @@ public class Weapon : MonoBehaviour
         Transform target = GetComponentInParent<Scanner>().nearestEnemyTransform;
         if (!target) return;
 
-        Transform bulletTransform = GameManager.instance.poolManager.GetComponent<PoolManager>().Get(prefabId).transform;
+        Transform bulletTransform = GameManager.instance.poolManager.Get(prefabId).transform;
 
         Vector3 dir = target.position - transform.position;
 

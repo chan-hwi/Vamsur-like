@@ -6,13 +6,15 @@ public class Spawner : MonoBehaviour
 {
     public int level = 0;
     public float levelInterval = 10f;
-    public float spawnRadius = 20f;
+    public float spawnRadius = 35f;
     public SpawnData[] spawnDataArray;
 
     private float spawnTimer = 0f;
 
     private void Update()
     {
+        if (!GameManager.instance.isAlive) return;
+
         level = Mathf.FloorToInt(GameManager.instance.gameTime / levelInterval);
 
         int spawnLevel = Mathf.Min(level, spawnDataArray.Length - 1);
@@ -28,7 +30,7 @@ public class Spawner : MonoBehaviour
 
     private void Spawn(SpawnData data)
     {
-        GameObject entity = GameManager.instance.poolManager.GetComponent<PoolManager>().Get(0);
+        GameObject entity = GameManager.instance.poolManager.Get(0);
         entity.GetComponent<Enemy>().Init(data);
 
         float spawnAngle = Random.Range(0f, Mathf.PI * 2f) * Mathf.Rad2Deg;
