@@ -54,4 +54,21 @@ public class Player : MonoBehaviour
         }
         anim.SetFloat("speed_f", inputVec.magnitude);
     }
+
+    private void OnCollisionStay2D(Collision2D collision)
+    {
+        if (!GameManager.instance.isAlive) return;
+
+        health -= 10f * Time.deltaTime;
+
+        if (health < 0)
+        {
+            for (int index = 2; index < transform.childCount; index++)
+            {
+                transform.GetChild(index).gameObject.SetActive(false);
+            }
+            anim.SetTrigger("death_t");
+            GameManager.instance.GameOver();
+        }
+    }
 }

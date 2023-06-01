@@ -1,13 +1,14 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
     public static GameManager instance;
 
     [Header("# Game Control")]
-    public bool isAlive = true;
+    public bool isAlive = false;
     public float gameTime = 0f;
     public float maxGameTime = 5 * 60f;
 
@@ -21,15 +22,57 @@ public class GameManager : MonoBehaviour
     public Player player;
     public PoolManager poolManager;
     public LevelUp uiLevelUp;
+    public Result uiResults;
+    public GameObject enemyCleaner;
 
     private void Awake()
     {
         instance = this;
     }
 
-    private void Start()
+    public void GameStart()
     {
-        uiLevelUp.Show();
+        isAlive = true;
+        uiLevelUp.Select(0);
+        Resume();
+    }
+
+    public void GameRetry()
+    {
+        SceneManager.LoadScene(0);
+    }
+
+    public void GameOver()
+    {
+        StartCoroutine(GameOverRoutine());
+    }
+
+    IEnumerator GameOverRoutine()
+    {
+        isAlive = false;
+
+        yield return new WaitForSeconds(0.5f);
+
+        uiResults.gameObject.SetActive(true);
+        uiResults.Lose();
+        Stop();
+    }
+
+    public void GameVictory()
+    {
+        StartCoroutine(GameVictoryRoutine());
+    }
+
+    IEnumerator GameVictoryRoutine()
+    {
+        isAlive = false;
+        enemyCleaner.SetActive(true);
+
+        yield return new WaitForSeconds(0.5f);
+
+        uiResults.gameObject.SetActive(true);
+        uiResults.Win();
+        Stop();
     }
 
     private void Update()
@@ -40,11 +83,14 @@ public class GameManager : MonoBehaviour
         if (gameTime > maxGameTime)
         {
             gameTime = maxGameTime;
+            GameVictory();
         }
     }
 
     public void getExp()
     {
+        if (!isAlive) return;
+
         exp++;
         if (level < nextExp.Length && exp == nextExp[level])
         {
@@ -56,7 +102,6 @@ public class GameManager : MonoBehaviour
 
     public void Stop()
     {
-        isAlive = false;
         Time.timeScale = 0;
     }
 
