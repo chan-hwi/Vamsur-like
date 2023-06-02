@@ -44,8 +44,8 @@ public class Weapon : MonoBehaviour
         transform.parent = GameManager.instance.player.transform;
         transform.localPosition = Vector3.zero;
 
-        damage = data.baseDamage;
-        count = data.baseCount;
+        damage = data.baseDamage * Character.Damage;
+        count = data.baseCount + Character.Count;
 
         PoolManager poolManager = GameManager.instance.poolManager;
         for (int index = 0; index < poolManager.prefabs.Length; index++)
@@ -64,11 +64,11 @@ public class Weapon : MonoBehaviour
         switch (id)
         {
             case 0:
-                speed = 150f;
+                speed = 150f * Character.WeaponSpeed;
                 locateWeapon0();
                 break;
             default:
-                speed = 0.4f;
+                speed = 0.4f * Character.WeaponRate;
                 break;
         }
 

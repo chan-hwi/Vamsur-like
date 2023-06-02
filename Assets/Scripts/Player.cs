@@ -10,6 +10,7 @@ public class Player : MonoBehaviour
     public float health;
     public float maxHealth = 100f;
     public Vector2 inputVec;
+    public RuntimeAnimatorController[] runtimeAnims;
 
     private Rigidbody2D rigid;
     private SpriteRenderer spRenderer;
@@ -29,6 +30,12 @@ public class Player : MonoBehaviour
     private void Start()
     {
         health = maxHealth;
+    }
+
+    private void OnEnable()
+    {
+        anim.runtimeAnimatorController = runtimeAnims[GameManager.instance.playerId];
+        speed *= Character.Speed;
     }
 
     private void OnMove(InputValue value)
