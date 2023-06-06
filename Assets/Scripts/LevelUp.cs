@@ -39,12 +39,18 @@ public class LevelUp : MonoBehaviour
             }
         }
         rect.localScale = new Vector3(1, 1, 1);
+
+        AudioManager.instance.PlayAudioEffect(true);
+        AudioManager.instance.PlaySfx(AudioManager.Sfx.LevelUp);
     }
 
     public void Hide()
     {
         GameManager.instance.Resume();
         rect.localScale = Vector3.zero;
+
+        AudioManager.instance.PlayAudioEffect(false);
+        AudioManager.instance.PlaySfx(AudioManager.Sfx.Select);
     }
 
     public void Select(int index)

@@ -85,6 +85,9 @@ public class Enemy : MonoBehaviour
 
             GameManager.instance.kill++;
             GameManager.instance.getExp();
+
+            if (GameManager.instance.isAlive)
+                AudioManager.instance.PlaySfx(AudioManager.Sfx.Dead);
         }
     }
 
@@ -94,6 +97,8 @@ public class Enemy : MonoBehaviour
 
         Vector3 dir = transform.position - GameManager.instance.player.transform.position;
         rigid.AddForce(dir.normalized * 5f, ForceMode2D.Impulse);
+
+        AudioManager.instance.PlaySfx(AudioManager.Sfx.Hit);
     }
 
     private void Dead()

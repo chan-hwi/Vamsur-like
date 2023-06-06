@@ -39,16 +39,21 @@ public class GameManager : MonoBehaviour
         player.gameObject.SetActive(true);
         uiLevelUp.Select(playerId % 2);
         Resume();
+        AudioManager.instance.PlaySfx(AudioManager.Sfx.Select);
+        AudioManager.instance.PlayBgm(true);
     }
 
     public void GameRetry()
     {
         SceneManager.LoadScene(0);
+        AudioManager.instance.PlaySfx(AudioManager.Sfx.Select);
     }
 
     public void GameOver()
     {
         StartCoroutine(GameOverRoutine());
+        AudioManager.instance.PlaySfx(AudioManager.Sfx.Lose);
+        AudioManager.instance.PlayBgm(false);
     }
 
     IEnumerator GameOverRoutine()
@@ -65,6 +70,8 @@ public class GameManager : MonoBehaviour
     public void GameVictory()
     {
         StartCoroutine(GameVictoryRoutine());
+        AudioManager.instance.PlaySfx(AudioManager.Sfx.Win);
+        AudioManager.instance.PlayBgm(false);
     }
 
     IEnumerator GameVictoryRoutine()
@@ -101,6 +108,7 @@ public class GameManager : MonoBehaviour
             exp = 0;
             level++;
             uiLevelUp.Show();
+            AudioManager.instance.PlaySfx(AudioManager.Sfx.LevelUp);
         }
     }
 

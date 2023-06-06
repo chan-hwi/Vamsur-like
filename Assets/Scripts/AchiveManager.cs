@@ -78,6 +78,7 @@ public class AchiveManager : MonoBehaviour
             }
             StartCoroutine(NoticeRoutine());
             PlayerPrefs.SetInt(achive.ToString(), 1);
+            AudioManager.instance.PlaySfx(AudioManager.Sfx.LevelUp);
         }
     }
 
