@@ -25,10 +25,12 @@ public class GameManager : MonoBehaviour
     public LevelUp uiLevelUp;
     public Result uiResults;
     public GameObject enemyCleaner;
+    public Transform uiJoy;
 
     private void Awake()
     {
         instance = this;
+        Application.targetFrameRate = 60;
     }
 
     public void GameStart(int playerId)
@@ -47,6 +49,11 @@ public class GameManager : MonoBehaviour
     {
         SceneManager.LoadScene(0);
         AudioManager.instance.PlaySfx(AudioManager.Sfx.Select);
+    }
+
+    public void GameQuit()
+    {
+        Application.Quit();
     }
 
     public void GameOver()
@@ -115,11 +122,13 @@ public class GameManager : MonoBehaviour
     public void Stop()
     {
         Time.timeScale = 0;
+        uiJoy.localScale = Vector3.zero;
     }
 
     public void Resume()
     {
         isAlive = true;
         Time.timeScale = 1;
+        uiJoy.localScale = Vector3.one;
     }
 }
