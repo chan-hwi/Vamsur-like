@@ -40,6 +40,7 @@ public class GameManager : MonoBehaviour
 
         player.gameObject.SetActive(true);
         uiLevelUp.Select(playerId % 2);
+        uiResults.gameObject.SetActive(false);
         Resume();
         AudioManager.instance.PlaySfx(AudioManager.Sfx.Select);
         AudioManager.instance.PlayBgm(true);

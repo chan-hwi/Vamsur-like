@@ -12,7 +12,7 @@ public class AchiveManager : MonoBehaviour
     enum Achive { PotatoCharacter, BeanCharacter };
     private Achive[] achives;
 
-    private WaitForSecondsRealtime transitionInterval = new WaitForSecondsRealtime(0.005f);
+    private WaitForSecondsRealtime transitionInterval = new WaitForSecondsRealtime(0.0005f);
     private WaitForSecondsRealtime showDuration = new WaitForSecondsRealtime(3f);
 
     private void Awake()
@@ -87,7 +87,7 @@ public class AchiveManager : MonoBehaviour
         RectTransform rect = uiNotice.GetComponent<RectTransform>();
 
         uiNotice.SetActive(true);
-        for (int i = 80; i >= 0; i--)
+        for (int i = 200; i >= 0; i--)
         {
             rect.anchoredPosition = new Vector2(i, rect.anchoredPosition.y);
             yield return transitionInterval;
@@ -96,7 +96,7 @@ public class AchiveManager : MonoBehaviour
         yield return showDuration;
 
 
-        for (int i = 0; i <= 80; i++)
+        for (int i = 0; i <= 200; i++)
         {
             rect.anchoredPosition = new Vector2(i, rect.anchoredPosition.y);
             yield return transitionInterval;
